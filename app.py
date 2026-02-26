@@ -14,9 +14,10 @@ import os
 import time
 import threading
 from datetime import datetime, date
-from flask import Flask, Response
+from flask import Flask, Response, send_from_directory
 
 app = Flask(__name__)
+APP_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # ── YOUR POSITIONS (edit if you open/close positions) ──────────────────
 POSITIONS = [
@@ -192,6 +193,7 @@ def build_html(d):
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta property="og:title" content="CIFR Portfolio | {pnl_sign}{fmt(tp)} ({pct(tpp)})">
 <meta property="og:description" content="CIFR ${sp:.2f} | Portfolio {fmt(tv)} | P&L {pnl_sign}{fmt(tp)}">
+<meta property="og:image" content="/profile.jpg">
 <meta name="theme-color" content="#0a0e17">
 <title>CIFR {pnl_sign}{fmt(tp)}</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
@@ -199,6 +201,8 @@ def build_html(d):
 *{{margin:0;padding:0;box-sizing:border-box}}
 body{{background:#0a0e17;color:#e2e8f0;font-family:'JetBrains Mono','SF Mono','Courier New',monospace;padding:20px;padding-top:max(20px,env(safe-area-inset-top));-webkit-font-smoothing:antialiased;min-height:100dvh}}
 .header{{border-bottom:1px solid #1e293b;padding-bottom:16px;margin-bottom:20px}}
+.header-top{{display:flex;align-items:center;gap:14px;margin-bottom:10px}}
+.profile-pic{{width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid #1e293b}}
 .eyebrow{{font-size:9px;letter-spacing:3px;color:#64748b;text-transform:uppercase;margin-bottom:4px}}
 .title{{font-size:22px;font-weight:700;color:#f8fafc}}
 .title span{{color:#64748b;font-weight:400;font-size:13px}}
@@ -225,8 +229,13 @@ body{{background:#0a0e17;color:#e2e8f0;font-family:'JetBrains Mono','SF Mono','C
 </head>
 <body>
 <div class="header">
-  <div class="eyebrow">CIFR Options Portfolio</div>
-  <div class="title">CIFR <span>Cipher Digital</span></div>
+  <div class="header-top">
+    <img src="/profile.jpg" class="profile-pic" alt="">
+    <div>
+      <div class="eyebrow">CIFR Options Portfolio</div>
+      <div class="title">CIFR <span>Cipher Digital</span></div>
+    </div>
+  </div>
   <div class="stock-price">{fmt2(sp) if sp else '—'}</div>
   <div class="ts">{d['timestamp']} · Nasdaq Delayed</div>
 </div>
@@ -253,6 +262,11 @@ body{{background:#0a0e17;color:#e2e8f0;font-family:'JetBrains Mono','SF Mono','C
 </div>
 </body>
 </html>"""
+
+
+@app.route("/profile.jpg")
+def profile_image():
+    return send_from_directory(APP_DIR, "profile.jpg", mimetype="image/jpeg")
 
 
 @app.route("/")
