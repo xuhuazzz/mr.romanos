@@ -266,9 +266,17 @@ body{{background:#0a0e17;color:#e2e8f0;font-family:'JetBrains Mono','SF Mono','C
 <button id="sound-btn" onclick="toggleSound()" style="position:fixed;bottom:20px;right:20px;z-index:10;background:rgba(30,41,59,0.9);border:1px solid #334155;color:#94a3b8;width:48px;height:48px;border-radius:50%;font-size:20px;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)">🔇</button>
 
 <script>
+var v=document.getElementById('vid');
+var b=document.getElementById('sound-btn');
+function unmuteOnce(){{
+  v.muted=false;
+  b.textContent='🔊';
+  document.removeEventListener('click',unmuteOnce);
+  document.removeEventListener('touchstart',unmuteOnce);
+}}
+document.addEventListener('click',unmuteOnce);
+document.addEventListener('touchstart',unmuteOnce);
 function toggleSound(){{
-  var v=document.getElementById('vid');
-  var b=document.getElementById('sound-btn');
   v.muted=!v.muted;
   b.textContent=v.muted?'🔇':'🔊';
 }}
