@@ -202,7 +202,7 @@ def build_html(d):
 body{{background:#0a0e17;color:#e2e8f0;font-family:'JetBrains Mono','SF Mono','Courier New',monospace;padding:20px;padding-top:max(20px,env(safe-area-inset-top));-webkit-font-smoothing:antialiased;min-height:100dvh}}
 .header{{border-bottom:1px solid #1e293b;padding-bottom:16px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center}}
 .header-left{{flex:1}}
-.profile-pic{{width:120px;height:120px;border-radius:12px;object-fit:cover;object-position:top;border:2px solid #1e293b;margin-left:14px;flex-shrink:0}}
+.header-video{{width:130px;height:130px;border-radius:12px;object-fit:cover;border:2px solid #1e293b;margin-left:14px;flex-shrink:0}}
 .eyebrow{{font-size:9px;letter-spacing:3px;color:#64748b;text-transform:uppercase;margin-bottom:4px}}
 .title{{font-size:22px;font-weight:700;color:#f8fafc}}
 .title span{{color:#64748b;font-weight:400;font-size:13px}}
@@ -223,14 +223,12 @@ body{{background:#0a0e17;color:#e2e8f0;font-family:'JetBrains Mono','SF Mono','C
 .stat .sv.bright{{color:#f8fafc}}
 .pnl-row{{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid #1e293b}}
 .footer{{font-size:10px;color:#475569;text-align:center;margin-top:16px;line-height:1.5}}
-.video-section{{background:#111827;border:1px solid #1e293b;border-radius:10px;overflow:hidden;margin-bottom:10px}}
-.video-section video{{width:100%;display:block}}
-.video-label{{font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:2px;padding:10px 14px}}
 .refresh{{display:block;width:100%;background:#1e293b;border:1px solid #334155;color:#94a3b8;padding:14px;border-radius:8px;font-size:13px;font-family:inherit;cursor:pointer;margin-top:14px;text-align:center;text-decoration:none}}
 .refresh:active{{background:#334155}}
 </style>
 </head>
 <body>
+
 <div class="header">
   <div class="header-left">
     <div class="eyebrow">CIFR Options Portfolio</div>
@@ -239,7 +237,9 @@ body{{background:#0a0e17;color:#e2e8f0;font-family:'JetBrains Mono','SF Mono','C
     <div class="stock-price">{fmt2(sp) if sp else '—'}</div>
     <div class="ts">{d['timestamp']} · Nasdaq Delayed</div>
   </div>
-  <video src="/celebration.mp4" class="profile-pic" autoplay loop playsinline></video>
+  <video class="header-video" autoplay loop playsinline muted id="vid">
+    <source src="/celebration.mp4" type="video/mp4">
+  </video>
 </div>
 
 <div class="grid2">
@@ -262,6 +262,17 @@ body{{background:#0a0e17;color:#e2e8f0;font-family:'JetBrains Mono','SF Mono','C
   459 contracts · ~$45,900 per $1 move · Data cached {CACHE_TTL}s<br>
   Cost basis: {fmt(TOTAL_COST_BASIS)} · DTE: <span style="color:#fbbf24">yellow &lt;120d</span> · <span style="color:#fca5a5">red &lt;60d</span>
 </div>
+
+<button id="sound-btn" onclick="toggleSound()" style="position:fixed;bottom:20px;right:20px;z-index:10;background:rgba(30,41,59,0.9);border:1px solid #334155;color:#94a3b8;width:48px;height:48px;border-radius:50%;font-size:20px;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)">🔇</button>
+
+<script>
+function toggleSound(){{
+  var v=document.getElementById('vid');
+  var b=document.getElementById('sound-btn');
+  v.muted=!v.muted;
+  b.textContent=v.muted?'🔇':'🔊';
+}}
+</script>
 </body>
 </html>"""
 
