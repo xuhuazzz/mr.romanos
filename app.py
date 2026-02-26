@@ -200,9 +200,9 @@ def build_html(d):
 <style>
 *{{margin:0;padding:0;box-sizing:border-box}}
 body{{background:#0a0e17;color:#e2e8f0;font-family:'JetBrains Mono','SF Mono','Courier New',monospace;padding:20px;padding-top:max(20px,env(safe-area-inset-top));-webkit-font-smoothing:antialiased;min-height:100dvh}}
-.header{{border-bottom:1px solid #1e293b;padding-bottom:16px;margin-bottom:20px}}
-.header-top{{display:flex;align-items:center;gap:14px;margin-bottom:10px}}
-.profile-pic{{width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid #1e293b}}
+.header{{border-bottom:1px solid #1e293b;padding-bottom:16px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center}}
+.header-left{{flex:1}}
+.profile-pic{{width:120px;height:120px;border-radius:12px;object-fit:cover;object-position:top;border:2px solid #1e293b;margin-left:14px;flex-shrink:0}}
 .eyebrow{{font-size:9px;letter-spacing:3px;color:#64748b;text-transform:uppercase;margin-bottom:4px}}
 .title{{font-size:22px;font-weight:700;color:#f8fafc}}
 .title span{{color:#64748b;font-weight:400;font-size:13px}}
@@ -229,15 +229,14 @@ body{{background:#0a0e17;color:#e2e8f0;font-family:'JetBrains Mono','SF Mono','C
 </head>
 <body>
 <div class="header">
-  <div class="header-top">
-    <img src="/profile.jpg" class="profile-pic" alt="">
-    <div>
-      <div class="eyebrow">CIFR Options Portfolio</div>
-      <div class="title">CIFR <span>Cipher Digital</span></div>
-    </div>
+  <div class="header-left">
+    <div class="eyebrow">CIFR Options Portfolio</div>
+    <div style="font-size:14px;font-weight:600;color:#94a3b8;font-style:italic;margin-bottom:6px">Path to Tony's Billions</div>
+    <div class="title">CIFR <span>Cipher Digital</span></div>
+    <div class="stock-price">{fmt2(sp) if sp else '—'}</div>
+    <div class="ts">{d['timestamp']} · Nasdaq Delayed</div>
   </div>
-  <div class="stock-price">{fmt2(sp) if sp else '—'}</div>
-  <div class="ts">{d['timestamp']} · Nasdaq Delayed</div>
+  <img src="/profile.jpg" class="profile-pic" alt="">
 </div>
 
 <div class="grid2">
