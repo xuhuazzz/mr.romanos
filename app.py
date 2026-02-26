@@ -223,6 +223,9 @@ body{{background:#0a0e17;color:#e2e8f0;font-family:'JetBrains Mono','SF Mono','C
 .stat .sv.bright{{color:#f8fafc}}
 .pnl-row{{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid #1e293b}}
 .footer{{font-size:10px;color:#475569;text-align:center;margin-top:16px;line-height:1.5}}
+.video-section{{background:#111827;border:1px solid #1e293b;border-radius:10px;overflow:hidden;margin-bottom:10px}}
+.video-section video{{width:100%;display:block}}
+.video-label{{font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:2px;padding:10px 14px}}
 .refresh{{display:block;width:100%;background:#1e293b;border:1px solid #334155;color:#94a3b8;padding:14px;border-radius:8px;font-size:13px;font-family:inherit;cursor:pointer;margin-top:14px;text-align:center;text-decoration:none}}
 .refresh:active{{background:#334155}}
 </style>
@@ -236,7 +239,7 @@ body{{background:#0a0e17;color:#e2e8f0;font-family:'JetBrains Mono','SF Mono','C
     <div class="stock-price">{fmt2(sp) if sp else '—'}</div>
     <div class="ts">{d['timestamp']} · Nasdaq Delayed</div>
   </div>
-  <img src="/profile.jpg" class="profile-pic" alt="">
+  <video src="/celebration.mp4" class="profile-pic" autoplay loop playsinline></video>
 </div>
 
 <div class="grid2">
@@ -266,6 +269,11 @@ body{{background:#0a0e17;color:#e2e8f0;font-family:'JetBrains Mono','SF Mono','C
 @app.route("/profile.jpg")
 def profile_image():
     return send_from_directory(APP_DIR, "profile.jpg", mimetype="image/jpeg")
+
+
+@app.route("/celebration.mp4")
+def celebration_video():
+    return send_from_directory(APP_DIR, "celebration.mp4", mimetype="video/mp4")
 
 
 @app.route("/")
